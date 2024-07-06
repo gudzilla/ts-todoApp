@@ -1,0 +1,67 @@
+.todoFooter {
+  font-size: 15px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e6e6e6;
+}
+
+.todoFooter::before {
+  bottom: 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
+    0 17px 2px -6px rgba(0, 0, 0, 0.2);
+  content: "";
+  height: 50px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+}
+
+.todoFooter::after {
+  content: "Double-click to edit a todo";
+  position: absolute;
+  top: calc(100% + 20px);
+  font-size: 12px;
+  left: 0;
+  right: 0;
+}
+
+.item {
+  z-index: 1;
+}
+
+.item:first-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.item:last-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 469px) {
+  .todoFooter {
+    height: 76px;
+    flex-wrap: wrap;
+  }
+  .item {
+    min-width: 80px;
+    padding: 4px 0;
+  }
+  .filters {
+    order: 3;
+    flex-grow: 1;
+  }
+}
+
+@media (min-width: 341px) and (max-width: 469px) {
+  .item {
+    min-width: 140px;
+  }
+}

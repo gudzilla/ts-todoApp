@@ -1,0 +1,83 @@
+.ul {
+  list-style-type: none;
+}
+
+.item {
+  font-size: 1.5em;
+  font-weight: 400;
+  line-height: 1.75rem;
+  border-bottom: 1px solid #ededed;
+  position: relative;
+}
+
+.itemCheckbox {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  left: 4px;
+  width: 40px;
+}
+
+.itemCheckbox:focus {
+  box-shadow: none;
+}
+
+.itemCheckbox:focus + .todoName {
+  box-shadow: 0 0 2px 2px var(--color-pale-red);
+  outline: 0;
+}
+
+.todoName {
+  display: block;
+  padding: 15px 15px 15px 60px;
+  text-align: left;
+  background-image: url(/src/assets/icons/unchecked-icon.svg);
+  background-repeat: no-repeat;
+  background-position: top 50% left 0;
+}
+
+.done {
+  text-decoration: line-through;
+  color: var(--color-grey);
+}
+
+.done .todoName {
+  background-image: url(/src/assets/icons/checked-icon.svg);
+}
+
+.removeButton {
+  position: absolute;
+  right: 6px;
+  height: 40px;
+  width: 40px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  right: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.item:hover .removeButton {
+  display: flex;
+}
+
+.removeIcon {
+  width: 18px;
+  height: 18px;
+  fill: var(--color-grey);
+  transition: fill 0.2s ease-out;
+}
+
+.removeButton:hover .removeIcon,
+.removeButton:focus .removeIcon {
+  fill: #c18585;
+}
+
+.hidden {
+  display: none;
+}

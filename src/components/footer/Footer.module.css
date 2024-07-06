@@ -1,0 +1,40 @@
+.info {
+  text-align: center;
+  padding: 28px 0 12px;
+  color: #4d4d4d;
+  font-size: 12px;
+}
+
+p {
+  margin-bottom: 6px;
+  line-height: 1;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+
+.gitLink {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: 500;
+  vertical-align: baseline;
+}
+
+.gitIcon {
+  opacity: 0.5;
+  vertical-align: -4px;
+}
+
+.gitLink:hover {
+  text-decoration: underline;
+}
+
+.gitLink:hover .gitIcon {
+  opacity: 1;
+}
+
+.reactIcon {
+  height: 18px;
+  width: 18px;
+  vertical-align: -5px;
+}
