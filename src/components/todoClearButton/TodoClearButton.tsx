@@ -1,7 +1,12 @@
 import styles from "./TodoClearButton.module.css";
 import cx from "classnames";
 
-export function TodoClearButton({ onClearCompleted, className }) {
+type TodoClearButtonProps = {
+  onClearCompleted: () => void;
+  className: string;
+};
+
+export function TodoClearButton({ onClearCompleted, className }: TodoClearButtonProps) {
   return (
     <div className={className}>
       <button className={cx(styles.clearCompletedButton)} onClick={onClearCompleted}>

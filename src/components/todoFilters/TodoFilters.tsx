@@ -1,13 +1,17 @@
 import styles from "./TodoFilters.module.css";
 import cx from "classnames";
-import { useState } from "react";
-import { FILTERS } from "../../constants/filters";
 
-export function TodoFilters({ filter, setFilter, className }) {
+type TodoFiltersProps = {
+  filter: string;
+  setFilter: (filterName: string) => void;
+  className: string;
+};
+
+export function TodoFilters({ filter, setFilter, className }: TodoFiltersProps) {
   return (
     <div className={cx(className, styles.filtersContent)}>
       <button
-        className={cx(styles.filter, { [styles.filterSelected]: filter === FILTERS.all })}
+        className={cx(styles.filter, { [styles.filterSelected]: filter === "all" })}
         onClick={() => {
           setFilter("all");
         }}
@@ -15,7 +19,7 @@ export function TodoFilters({ filter, setFilter, className }) {
         All
       </button>
       <button
-        className={cx(styles.filter, { [styles.filterSelected]: filter === FILTERS.active })}
+        className={cx(styles.filter, { [styles.filterSelected]: filter === "active" })}
         onClick={() => {
           setFilter("active");
         }}
@@ -23,9 +27,7 @@ export function TodoFilters({ filter, setFilter, className }) {
         Active
       </button>
       <button
-        className={cx(styles.filter, {
-          [styles.filterSelected]: filter === FILTERS.completed,
-        })}
+        className={cx(styles.filter, { [styles.filterSelected]: filter === "completed" })}
         onClick={() => {
           setFilter("completed");
         }}
