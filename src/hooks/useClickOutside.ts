@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 
-export function useClickOutside(node, fn) {
+export function useClickOutside(
+  node: React.MutableRefObject<HTMLElement | null>,
+  fn: () => void
+) {
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (node.current && !node.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (node.current && !node.current.contains(event.target as Node)) {
         fn();
       }
     };
