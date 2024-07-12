@@ -1,6 +1,12 @@
-const filterAll = (item) => item;
-const filterActive = (item) => !item.isDone;
-const filterCompleted = (item) => item.isDone;
+type TodoItem = {
+  id: string;
+  isDone: boolean;
+  name: string;
+};
+
+const filterAll = (item: TodoItem) => item;
+const filterActive = (item: TodoItem) => !item.isDone;
+const filterCompleted = (item: TodoItem) => item.isDone;
 
 export const FILTERS = {
   all: "all",

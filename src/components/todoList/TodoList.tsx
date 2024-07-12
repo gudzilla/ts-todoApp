@@ -5,19 +5,19 @@ import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
 
 type TodoItem = {
-  id: number;
+  id: string;
   isDone: boolean;
   name: string;
 };
 type TodoListProps = {
   list: TodoItem[];
-  onToggle: (id: number) => void;
-  onRemove: (id: number) => void;
-  onNameChange: (id: number, newName: string) => void;
+  onToggle: (id: string) => void;
+  onRemove: (id: string) => void;
+  onNameChange: (id: string, newName: string) => void;
 };
 
 export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoListProps) {
-  const [editModeId, setEditModeId] = useState<number | null>(null);
+  const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
 
   function handleTodoNameChange({
@@ -30,7 +30,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
     setEditModeId(null);
   }
 
-  function handleAcceptEditChanges(id: number, newName: string) {
+  function handleAcceptEditChanges(id: string, newName: string) {
     onNameChange(id, newName);
     setEditModeId(null);
   }
