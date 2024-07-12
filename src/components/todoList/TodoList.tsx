@@ -1,14 +1,28 @@
 import styles from "./TodoList.module.css";
 import cx from "classnames";
 import RemoveIcon from "../../assets/icons/RemoveIcon.svg?react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
 
-export function TodoList({ list, onToggle, onRemove, onNameChange }) {
-  const [editModeId, setEditModeId] = useState(null);
+type TodoItem = {
+  id: number;
+  isDone: boolean;
+  name: string;
+};
+type TodoListProps = {
+  list: TodoItem[];
+  onToggle: (id: number) => void;
+  onRemove: (id: number) => void;
+  onNameChange: (id: number, newName: string) => void;
+};
+
+export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoListProps) {
+  const [editModeId, setEditModeId] = useState<number | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
 
-  function handleTodoNameChange({ target: { value } }) {
+  function handleTodoNameChange({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) {
     setNewTodoName(value);
   }
 
@@ -16,23 +30,30 @@ export function TodoList({ list, onToggle, onRemove, onNameChange }) {
     setEditModeId(null);
   }
 
-  function handleAcceptEditChanges(id, newName) {
+  function handleAcceptEditChanges(id: number, newName: string) {
     onNameChange(id, newName);
     setEditModeId(null);
   }
 
-  function handleKeyDown({ target: { value }, key, keyCode }) {
-    if ((key === "Enter" || keyCode === 13) && value.trim().length > 1) {
-      handleAcceptEditChanges(editModeId, value.trim());
-    } else if (key === "Escape" || keyCode === 27) {
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    const { value } = event.target as HTMLInputElement;
+    const { key } = event;
+
+    if (key === "Enter" && value.trim().length > 1) {
+      if (editModeId !== null) {
+        handleAcceptEditChanges(editModeId, value.trim());
+      }
+    } else if (key === "Escape") {
       handleCancelEditChanges();
     }
   }
 
   useEffect(() => {
     if (editModeId) {
-      const editItemName = list.find((item) => item.id === editModeId).name;
-      setNewTodoName(editItemName);
+      const editItem = list.find((item) => item.id === editModeId);
+      if (editItem) {
+        setNewTodoName(editItem.name);
+      }
     } else {
       setNewTodoName("");
     }

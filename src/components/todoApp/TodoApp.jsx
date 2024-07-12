@@ -7,6 +7,12 @@ import { TodoList } from "../todoList";
 import { TodoFooter } from "../todoFooter";
 import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
 
+// type TodoItem = {
+//   id: number,
+//   isDone: boolean,
+//   name: string,
+// };
+
 export function TodoApp() {
   const [todoList, setTodoList] = useState([]);
   const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
