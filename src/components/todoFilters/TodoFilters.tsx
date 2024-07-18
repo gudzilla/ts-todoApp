@@ -2,7 +2,7 @@ import styles from "./TodoFilters.module.css";
 import cx from "classnames";
 
 type TodoFiltersProps = {
-  filter: string;
+  filter: "all" | "active" | "completed";
   setFilter: (filterName: string) => void;
   className: string;
 };

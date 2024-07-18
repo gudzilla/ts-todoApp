@@ -15,10 +15,10 @@ export function AddTodoForm({
   const [newTodoValue, setNewTodoValue] = useState("");
   const newTodoInput = useRef(null);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: EventFor<"input", "onKeyDown">) => {
     if (event.key === "Enter") {
-      const target = event.target as HTMLInputElement;
-      if (target.value.trim().length > 1) {
+      // const target = event.target as HTMLInputElement;
+      if (newTodoValue.trim().length > 1) {
         onSubmit(newTodoValue.trim());
         setNewTodoValue("");
       }
@@ -34,8 +34,8 @@ export function AddTodoForm({
         placeholder="What needs to be done?"
         className={styles.inputNewTodo}
         value={newTodoValue}
-        onChange={(e) => {
-          setNewTodoValue(e.target.value);
+        onChange={({ target: { value } }) => {
+          setNewTodoValue(value);
         }}
         onKeyDown={handleKeyDown}
       />

@@ -20,9 +20,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
   const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
 
-  function handleTodoNameChange({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) {
+  function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);
   }
 
@@ -35,14 +33,13 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
     setEditModeId(null);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(event: EventFor<"input", "onKeyDown">) {
     const { value } = event.target as HTMLInputElement;
     const { key } = event;
+    const trimmedValue = value.trim();
 
-    if (key === "Enter" && value.trim().length > 1) {
-      if (editModeId !== null) {
-        handleAcceptEditChanges(editModeId, value.trim());
-      }
+    if (key === "Enter" && trimmedValue.length > 1 && editModeId !== null) {
+      handleAcceptEditChanges(editModeId, trimmedValue);
     } else if (key === "Escape") {
       handleCancelEditChanges();
     }

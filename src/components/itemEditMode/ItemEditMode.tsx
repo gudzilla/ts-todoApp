@@ -4,8 +4,8 @@ import { useClickOutside } from "../../hooks/useClickOutside";
 
 type ItemEditModeProps = {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onChange: (event: EventFor<"input", "onChange">) => void;
+  onKeyDown: (event: EventFor<"input", "onKeyDown">) => void;
   onCancel: () => void;
 };
 
