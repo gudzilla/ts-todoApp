@@ -4,7 +4,19 @@ import { TodoItemsLeft } from "../todoItemsLeft";
 import { TodoFilters } from "../todoFilters";
 import { TodoClearButton } from "../todoClearButton";
 
-export function TodoFooter({ undoneCounter, onClearCompleted, todoList, filter, setFilter }) {
+type TodoFooterProps = {
+  undoneCounter: number;
+  onClearCompleted: () => void;
+  filter: string;
+  setFilter: (filterName: string) => void;
+};
+
+export function TodoFooter({
+  undoneCounter,
+  onClearCompleted,
+  filter,
+  setFilter,
+}: TodoFooterProps) {
   return (
     <footer className={styles.todoFooter}>
       <TodoItemsLeft undoneCounter={undoneCounter} className={styles.item} />

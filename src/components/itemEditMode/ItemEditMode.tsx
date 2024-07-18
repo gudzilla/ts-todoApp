@@ -2,7 +2,19 @@ import { useRef, useEffect } from "react";
 import styles from "./ItemEditMode.module.css";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
-export function ItemEditMode({ value, onChange, onKeyDown, onCancel }) {
+type ItemEditModeProps = {
+  value: string;
+  onChange: (event: EventFor<"input", "onChange">) => void;
+  onKeyDown: (event: EventFor<"input", "onKeyDown">) => void;
+  onCancel: () => void;
+};
+
+export function ItemEditMode({
+  value,
+  onChange,
+  onKeyDown,
+  onCancel,
+}: ItemEditModeProps) {
   const inputRef = useRef(null);
 
   useClickOutside(inputRef, onCancel);
