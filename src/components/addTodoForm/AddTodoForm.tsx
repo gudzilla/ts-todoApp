@@ -17,7 +17,6 @@ export function AddTodoForm({
 
   const handleKeyDown = (event: EventFor<"input", "onKeyDown">) => {
     if (event.key === "Enter") {
-      // const target = event.target as HTMLInputElement;
       if (newTodoValue.trim().length > 1) {
         onSubmit(newTodoValue.trim());
         setNewTodoValue("");
