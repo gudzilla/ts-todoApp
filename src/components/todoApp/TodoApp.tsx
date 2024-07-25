@@ -6,6 +6,11 @@ import { AddTodoForm } from "../addTodoForm";
 import { TodoList } from "../todoList";
 import { TodoFooter } from "../todoFooter";
 import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
+// ----------
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../state/store";
+import { addNewTodo } from "../../state/todoList/todoListSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 type TodoItem = {
   id: string;
@@ -16,9 +21,19 @@ type TodoItem = {
 export function TodoApp() {
   const [todoList, setTodoList] = useState<TodoItem[]>([]);
   const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
+
   const undoneItemsCount = todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
   const hasItems = todoList.length > 0;
   const isListCompleted = todoList.every(FILTERS_PREDICATE[FILTERS.completed]);
+
+  // ---- Redux ----
+
+  // just for example
+  const storeList = useSelector((state: RootState) => state.todoList);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  // ---------------
 
   let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
 
@@ -95,6 +110,8 @@ export function TodoApp() {
   return (
     <section className={styles.todoSection}>
       <h1 className={styles.todoHeader}>todos:</h1>
+      {/* --- REDUX BUTTONS --- */}
+      {/* --------------------- */}
       <div className={styles.todo}>
         <AddTodoForm
           onSubmit={handleAddNewTodo}

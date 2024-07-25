@@ -3,6 +3,10 @@ import cx from "classnames";
 import RemoveIcon from "../../assets/icons/RemoveIcon.svg?react";
 import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
+// ---
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../state/store";
+import { toogleItemCheckbox } from "../../state/todoList/todoListSlice";
 
 type TodoItem = {
   id: string;
@@ -19,6 +23,9 @@ type TodoListProps = {
 export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoListProps) {
   const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
+  // Redux
+  const dispatch = useDispatch<AppDispatch>();
+  const reduxList = useSelector((state: RootState) => state.todoList);
 
   function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);
@@ -76,6 +83,8 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
                 checked={item.isDone}
                 onChange={() => {
                   onToggle(item.id);
+                  // REDUX
+                  dispatch(toogleItemCheckbox(item.id));
                 }}
               />
               <label className={styles.todoName}>{item.name}</label>

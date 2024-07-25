@@ -1,5 +1,10 @@
 import styles from "./AddTodoForm.module.css";
 import { useState, useRef } from "react";
+//  -----------
+import { addNewTodo } from "../../state/todoList/todoListSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/store";
 
 type AddTodoFormProps = {
   onSubmit: (name: string) => void;
@@ -12,13 +17,28 @@ export function AddTodoForm({
   hasItems,
   completeButtonNode,
 }: AddTodoFormProps) {
+  // local state
   const [newTodoValue, setNewTodoValue] = useState("");
   const newTodoInput = useRef(null);
 
+  // --- REDUX
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  // -------------
   const handleKeyDown = (event: EventFor<"input", "onKeyDown">) => {
+    const trimmedValue = newTodoValue.trim();
     if (event.key === "Enter") {
-      if (newTodoValue.trim().length > 1) {
+      if (trimmedValue.length > 1) {
         onSubmit(newTodoValue.trim());
+        // ------
+        dispatch(
+          addNewTodo({
+            id: nanoid(),
+            isDone: false,
+            name: trimmedValue,
+          })
+        );
         setNewTodoValue("");
       }
     }
