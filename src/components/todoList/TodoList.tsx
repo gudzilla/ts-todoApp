@@ -6,7 +6,7 @@ import { ItemEditMode } from "../itemEditMode";
 // ---
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../state/store";
-import { toogleItemCheckbox } from "../../state/todoList/todoListSlice";
+import { removeTodo, toogleItemCheckbox } from "../../state/todoList/todoListSlice";
 
 type TodoItem = {
   id: string;
@@ -92,6 +92,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
                 className={styles.removeButton}
                 onClick={() => {
                   onRemove(item.id);
+                  dispatch(removeTodo(item.id));
                 }}
               >
                 <RemoveIcon className={styles.removeIcon} />

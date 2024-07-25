@@ -9,7 +9,7 @@ import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
 // ----------
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../state/store";
-import { addNewTodo } from "../../state/todoList/todoListSlice";
+import { addNewTodo, toggleAllCheckboxes } from "../../state/todoList/todoListSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 type TodoItem = {
@@ -75,6 +75,9 @@ export function TodoApp() {
     }));
 
     setTodoList(newList);
+
+    // redux
+    dispatch(toggleAllCheckboxes());
   }
 
   function handleRemoveCompletedItems() {
