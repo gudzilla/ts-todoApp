@@ -73,9 +73,9 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
                 { [styles.done]: item.isDone },
                 { [styles.hidden]: item.id === editModeId }
               )}
-              onDoubleClick={() => {
-                setEditModeId(item.id);
-              }}
+              // onDoubleClick={() => {
+              //   setEditModeId(item.id);
+              // }}
             >
               <input
                 type="checkbox"
@@ -100,14 +100,14 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
             </div>
 
             {/* EDIT MODE FOR TODO ITEM */}
-            {item.id === editModeId && (
+            {/* {item.id === editModeId && (
               <ItemEditMode
                 value={newTodoName}
                 onChange={handleTodoNameChange}
                 onKeyDown={handleKeyDown}
                 onCancel={handleCancelEditChanges}
               />
-            )}
+            )} */}
           </li>
         );
       })}

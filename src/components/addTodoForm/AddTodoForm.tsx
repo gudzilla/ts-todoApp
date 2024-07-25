@@ -32,13 +32,7 @@ export function AddTodoForm({
       if (trimmedValue.length > 1) {
         onSubmit(newTodoValue.trim());
         // ------
-        dispatch(
-          addNewTodo({
-            id: nanoid(),
-            isDone: false,
-            name: trimmedValue,
-          })
-        );
+        dispatch(addNewTodo(trimmedValue));
         setNewTodoValue("");
       }
     }

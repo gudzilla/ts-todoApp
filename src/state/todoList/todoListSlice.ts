@@ -17,8 +17,14 @@ const todoListSlice = createSlice({
   name: "todoList",
   initialState,
   reducers: {
-    addNewTodo: (state, action: PayloadAction<TodoItem>) => {
-      state.push(action.payload);
+    addNewTodo: (state, action: PayloadAction<string>) => {
+      const todoName = action.payload;
+
+      state.push({
+        id: nanoid(),
+        isDone: false,
+        name: todoName,
+      });
     },
     toogleItemCheckbox: (state, action: PayloadAction<string>) => {
       // Fot now ID is wrong because coming not from STORE but from useState
