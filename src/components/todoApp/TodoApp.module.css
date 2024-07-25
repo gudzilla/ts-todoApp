@@ -22,26 +22,3 @@
   box-shadow: 0 0 2px 2px var(--color-pale-red);
   outline: 0;
 }
-
-.completeButton {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  width: 46px;
-  height: 100%;
-  color: var(--color-grey);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.completeButtonIcon {
-  display: inline-block;
-  font-size: 22px;
-  transform: rotate(90deg);
-}
-
-.onAllDone {
-  color: #444;
-}

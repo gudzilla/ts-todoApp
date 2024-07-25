@@ -17,8 +17,8 @@ const todoListSlice = createSlice({
   name: "todoList",
   initialState,
   reducers: {
-    addNewTodo: (state, action: PayloadAction<string>) => {
-      const todoName = action.payload;
+    addNewTodo: (state, action: PayloadAction<{ todoName: string }>) => {
+      const { todoName } = action.payload;
 
       state.push({
         id: nanoid(),
@@ -46,8 +46,9 @@ const todoListSlice = createSlice({
       return state.filter((todo) => todo.id !== incomingId);
     },
     toggleAllCheckboxes: (state) => {
+      const haveUndoneTodos = state.some((todo) => !todo.isDone);
       for (let todo of state) {
-        todo.isDone = !todo.isDone;
+        todo.isDone = haveUndoneTodos;
       }
     },
     removeCompleted: (state) => {

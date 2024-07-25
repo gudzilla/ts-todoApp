@@ -19,17 +19,15 @@ type TodoItem = {
 };
 
 export function TodoApp() {
-  const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  // const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  const todoList = useSelector((state: RootState) => state.todoList);
+
   const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
 
   const undoneItemsCount = todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
   const hasItems = todoList.length > 0;
-  const isListCompleted = todoList.every(FILTERS_PREDICATE[FILTERS.completed]);
 
   // ---- Redux ----
-
-  // just for example
-  const storeList = useSelector((state: RootState) => state.todoList);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,104 +35,103 @@ export function TodoApp() {
 
   let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
 
-  function handleCheckItem(id: string) {
-    const newList = todoList.map((item) => {
-      if (item.id !== id) {
-        return item;
-      }
-      return {
-        ...item,
-        isDone: !item.isDone,
-      };
-    });
+  // DELETE
+  // function handleCheckItem(id: string) {
+  //   const newList = todoList.map((item) => {
+  //     if (item.id !== id) {
+  //       return item;
+  //     }
+  //     return {
+  //       ...item,
+  //       isDone: !item.isDone,
+  //     };
+  //   });
 
-    setTodoList(newList);
-  }
+  //   setTodoList(newList);
+  // }
 
-  function handleRemoveItem(id: string) {
-    setTodoList(todoList.filter((item) => item.id !== id));
-  }
+  // DELETE
+  // function handleRemoveItem(id: string) {
+  //   setTodoList(todoList.filter((item) => item.id !== id));
+  // }
 
-  function handleAddNewTodo(name: string) {
-    const newList: TodoItem[] = [
-      ...todoList,
-      {
-        id: uuidv4(),
-        isDone: false,
-        name,
-      },
-    ];
-    setTodoList(newList);
-  }
+  // DELETE
+  // function handleAddNewTodo(name: string) {
+  //   const newList: TodoItem[] = [
+  //     ...todoList,
+  //     {
+  //       id: uuidv4(),
+  //       isDone: false,
+  //       name,
+  //     },
+  //   ];
+  //   setTodoList(newList);
+  // }
 
-  function handleCheckAllOrUncheckAll() {
-    const haveUndoneItems = todoList.some((todoItem) => !todoItem.isDone);
-    const newList = todoList.map((todoItem) => ({
-      ...todoItem,
-      isDone: haveUndoneItems,
-    }));
+  // DELETE
+  // function toogleAllTodos() {
+  // const haveUndoneItems = todoList.some((todoItem) => !todoItem.isDone);
+  // const newList = todoList.map((todoItem) => ({
+  //   ...todoItem,
+  //   isDone: haveUndoneItems,
+  // }));
 
-    setTodoList(newList);
+  // setTodoList(newList);
+  // }
 
-    // redux
-    dispatch(toggleAllCheckboxes());
-  }
+  // DELETE
+  // function handleRemoveCompletedItems() {
+  //   const newList = todoList.filter((todoItem) => !todoItem.isDone);
+  //   setTodoList(newList);
+  // }
 
-  function handleRemoveCompletedItems() {
-    const newList = todoList.filter((todoItem) => !todoItem.isDone);
-    setTodoList(newList);
-  }
+  // DELETE
+  // function handleItemNameChange(id: string, newName: string) {
+  //   const newList = todoList.map((todoItem) => {
+  //     if (todoItem.id === id) {
+  //       return {
+  //         ...todoItem,
+  //         name: newName,
+  //       };
+  //     } else {
+  //       return todoItem;
+  //     }
+  //   });
+  //   setTodoList(newList);
+  // }
 
-  function handleItemNameChange(id: string, newName: string) {
-    const newList = todoList.map((todoItem) => {
-      if (todoItem.id === id) {
-        return {
-          ...todoItem,
-          name: newName,
-        };
-      } else {
-        return todoItem;
-      }
-    });
-    setTodoList(newList);
-  }
-
-  function CompleteAllButton() {
-    return (
-      <button
-        className={cx(styles.completeButton, { [styles.onAllDone]: isListCompleted })}
-        onClick={handleCheckAllOrUncheckAll}
-      >
-        <span className={styles.completeButtonIcon}>❯</span>
-      </button>
-    );
-  }
+  // function CompleteAllButton() {
+  //   return (
+  //     <button
+  //       className={cx(styles.completeButton, { [styles.onAllDone]: isListCompleted })}
+  //       onClick={()=> {
+  //         dispatch(toggleAllCheckboxes());
+  //       }}
+  //     >
+  //       <span className={styles.completeButtonIcon}>❯</span>
+  //     </button>
+  //   );
+  // }
 
   return (
     <section className={styles.todoSection}>
       <h1 className={styles.todoHeader}>todos:</h1>
-      {/* --- REDUX BUTTONS --- */}
-      {/* --------------------- */}
       <div className={styles.todo}>
-        <AddTodoForm
-          onSubmit={handleAddNewTodo}
-          hasItems={hasItems}
-          completeButtonNode={<CompleteAllButton />}
-        />
-        <TodoList
+        <AddTodoForm />
+        {/* <TodoList
           list={renderList}
           onToggle={handleCheckItem}
           onRemove={handleRemoveItem}
           onNameChange={handleItemNameChange}
-        />
-        {hasItems && (
+        /> */}
+        {/* {hasItems && (
           <TodoFooter
             undoneCounter={undoneItemsCount}
             onClearCompleted={handleRemoveCompletedItems}
             filter={todoListFilter}
             setFilter={setTodoListFilter}
           />
-        )}
+        )} */}
       </div>
     </section>
   );
