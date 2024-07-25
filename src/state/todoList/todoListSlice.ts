@@ -28,24 +28,29 @@ const todoListSlice = createSlice({
       state[0].isDone = !state[0].isDone;
     },
     removeTodo: (state, action: PayloadAction<string>) => {
+      // remove and uncomment .payload later
+      const incomingId = state[0].id;
       // const incomingId = action.payload;
 
-      // remove and uncomment .payload
-      const incomingId = state[0].id;
-
-      console.log(incomingId);
-      const removeId = state.findIndex((todo) => todo.id === incomingId);
-      state.splice(removeId, 1);
+      return state.filter((todo) => todo.id !== incomingId);
     },
     toggleAllCheckboxes: (state) => {
       for (let todo of state) {
         todo.isDone = !todo.isDone;
       }
     },
+    removeCompleted: (state) => {
+      return state.filter((todo) => !todo.isDone);
+    },
   },
 });
 
-export const { addNewTodo, toogleItemCheckbox, removeTodo, toggleAllCheckboxes } =
-  todoListSlice.actions;
+export const {
+  addNewTodo,
+  toogleItemCheckbox,
+  removeTodo,
+  toggleAllCheckboxes,
+  removeCompleted,
+} = todoListSlice.actions;
 
 export default todoListSlice.reducer;

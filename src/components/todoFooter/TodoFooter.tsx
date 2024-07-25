@@ -3,6 +3,10 @@ import cx from "classnames";
 import { TodoItemsLeft } from "../todoItemsLeft";
 import { TodoFilters } from "../todoFilters";
 import { TodoClearButton } from "../todoClearButton";
+// ---
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/store";
+import { removeCompleted } from "../../state/todoList/todoListSlice";
 
 type TodoFooterProps = {
   undoneCounter: number;
@@ -17,6 +21,8 @@ export function TodoFooter({
   filter,
   setFilter,
 }: TodoFooterProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <footer className={styles.todoFooter}>
       <TodoItemsLeft undoneCounter={undoneCounter} className={styles.item} />
@@ -25,7 +31,14 @@ export function TodoFooter({
         setFilter={setFilter}
         className={cx(styles.item, styles.filters)}
       />
-      <TodoClearButton onClearCompleted={onClearCompleted} className={styles.item} />
+      <TodoClearButton
+        onClearCompleted={() => {
+          onClearCompleted();
+          // redux
+          dispatch(removeCompleted());
+        }}
+        className={styles.item}
+      />
     </footer>
   );
 }
