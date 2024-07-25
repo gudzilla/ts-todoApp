@@ -6,6 +6,11 @@ type TodoItem = {
   name: string;
 };
 
+type NewTodoName = {
+  editId: string;
+  newName: string;
+};
+
 const initialState: TodoItem[] = [];
 
 const todoListSlice = createSlice({
@@ -42,6 +47,13 @@ const todoListSlice = createSlice({
     removeCompleted: (state) => {
       return state.filter((todo) => !todo.isDone);
     },
+    editTodoName: (state, action: PayloadAction<NewTodoName>) => {
+      const { editId, newName } = action.payload;
+      const todo = state.find((todo) => todo.id === editId);
+      if (todo) {
+        todo.name = newName;
+      }
+    },
   },
 });
 
@@ -51,6 +63,7 @@ export const {
   removeTodo,
   toggleAllCheckboxes,
   removeCompleted,
+  editTodoName,
 } = todoListSlice.actions;
 
 export default todoListSlice.reducer;
