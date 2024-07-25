@@ -1,25 +1,27 @@
-import styles from "./AddTodoForm.module.css";
-import { useState, useRef } from "react";
+import styles from './AddTodoForm.module.css';
+import { useState, useRef } from 'react';
+import cx from 'classnames';
+import { addNewTodo, toggleAllDone } from '../../state/todoList/todoListSlice';
+import { FILTERS, FILTERS_PREDICATE } from '../../constants/filters';
+import { useTodoListSelector } from '../../state/selectors';
+import { useAppDispatch } from '../../shared/lib/redux/hooks';
 
-type AddTodoFormProps = {
-  onSubmit: (name: string) => void;
-  hasItems: boolean;
-  completeButtonNode: JSX.Element;
-};
-
-export function AddTodoForm({
-  onSubmit,
-  hasItems,
-  completeButtonNode,
-}: AddTodoFormProps) {
-  const [newTodoValue, setNewTodoValue] = useState("");
+export function AddTodoForm() {
+  const [newTodoValue, setNewTodoValue] = useState('');
   const newTodoInput = useRef(null);
 
-  const handleKeyDown = (event: EventFor<"input", "onKeyDown">) => {
-    if (event.key === "Enter") {
-      if (newTodoValue.trim().length > 1) {
-        onSubmit(newTodoValue.trim());
-        setNewTodoValue("");
+  const todoList = useTodoListSelector();
+  const dispatch = useAppDispatch();
+
+  const hasItems = todoList.length > 0;
+  const isListCompleted = todoList.every(FILTERS_PREDICATE[FILTERS.completed]);
+
+  const handleKeyDown = (event: EventFor<'input', 'onKeyDown'>) => {
+    const trimmedValue = newTodoValue.trim();
+    if (event.key === 'Enter') {
+      if (trimmedValue.length > 1) {
+        dispatch(addNewTodo({ todoName: trimmedValue }));
+        setNewTodoValue('');
       }
     }
   };
@@ -29,8 +31,8 @@ export function AddTodoForm({
       <input
         autoFocus={true}
         ref={newTodoInput}
-        type="text"
-        placeholder="What needs to be done?"
+        type='text'
+        placeholder='What needs to be done?'
         className={styles.inputNewTodo}
         value={newTodoValue}
         onChange={({ target: { value } }) => {
@@ -38,7 +40,16 @@ export function AddTodoForm({
         }}
         onKeyDown={handleKeyDown}
       />
-      {hasItems && completeButtonNode}
+      {hasItems && (
+        <button
+          className={cx(styles.completeButton, { [styles.onAllDone]: isListCompleted })}
+          onClick={() => {
+            dispatch(toggleAllDone());
+          }}
+        >
+          <span className={styles.completeButtonIcon}>❯</span>
+        </button>
+      )}
     </div>
   );
 }

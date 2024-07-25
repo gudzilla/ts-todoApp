@@ -1,7 +1,11 @@
+import { activeTodosCountSelector } from '../../state/todoList/todoListSlice';
+import { useAppSelector } from '../../shared/lib/redux/hooks';
+
 type TodoItemsLeftProps = {
-  undoneCounter: number;
   className: string;
 };
-export function TodoItemsLeft({ undoneCounter, className }: TodoItemsLeftProps) {
-  return <span className={className}>{undoneCounter} items left!</span>;
+export function TodoItemsLeft({ className }: TodoItemsLeftProps) {
+  const undoneTodosCount = useAppSelector(activeTodosCountSelector);
+
+  return <span className={className}>{undoneTodosCount} items left!</span>;
 }
