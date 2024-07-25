@@ -6,26 +6,24 @@ import { ItemEditMode } from "../itemEditMode";
 // ---
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../state/store";
-import { removeTodo, toogleItemCheckbox } from "../../state/todoList/todoListSlice";
+import {
+  editTodoName,
+  removeTodo,
+  toogleItemCheckbox,
+} from "../../state/todoList/todoListSlice";
 
 type TodoItem = {
   id: string;
   isDone: boolean;
   name: string;
 };
-type TodoListProps = {
-  list: TodoItem[];
-  onToggle: (id: string) => void;
-  onRemove: (id: string) => void;
-  onNameChange: (id: string, newName: string) => void;
-};
 
-export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoListProps) {
+export function TodoList() {
   const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
   // Redux
   const dispatch = useDispatch<AppDispatch>();
-  const reduxList = useSelector((state: RootState) => state.todoList);
+  const renderList = useSelector((state: RootState) => state.todoList);
 
   function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);
@@ -36,7 +34,12 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
   }
 
   function handleAcceptEditChanges(id: string, newName: string) {
-    onNameChange(id, newName);
+    dispatch(
+      editTodoName({
+        editId: id,
+        newName,
+      })
+    );
     setEditModeId(null);
   }
 
@@ -54,7 +57,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
 
   useEffect(() => {
     if (editModeId) {
-      const editItem = list.find((item) => item.id === editModeId);
+      const editItem = renderList.find((item) => item.id === editModeId);
       if (editItem) {
         setNewTodoName(editItem.name);
       }
@@ -65,7 +68,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
 
   return (
     <ul className={styles.ul}>
-      {list.map((item) => {
+      {renderList.map((item) => {
         return (
           <li key={item.id} className={styles.item}>
             <div
@@ -81,18 +84,15 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
                 type="checkbox"
                 className={styles.itemCheckbox}
                 checked={item.isDone}
-                onChange={() => {
-                  onToggle(item.id);
-                  // REDUX
-                  dispatch(toogleItemCheckbox(item.id));
+                onChange={(e) => {
+                  dispatch(toogleItemCheckbox({ toggleId: item.id }));
                 }}
               />
               <label className={styles.todoName}>{item.name}</label>
               <button
                 className={styles.removeButton}
                 onClick={() => {
-                  onRemove(item.id);
-                  dispatch(removeTodo(item.id));
+                  dispatch(removeTodo({ removeId: item.id }));
                 }}
               >
                 <RemoveIcon className={styles.removeIcon} />

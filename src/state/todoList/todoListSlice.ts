@@ -26,24 +26,16 @@ const todoListSlice = createSlice({
         name: todoName,
       });
     },
-    toogleItemCheckbox: (state, action: PayloadAction<string>) => {
-      // Fot now ID is wrong because coming not from STORE but from useState
-      const incomingId = action.payload;
-
-      const todo = state.find((todo) => todo.id === incomingId);
+    toogleItemCheckbox: (state, action: PayloadAction<{ toggleId: string }>) => {
+      const { toggleId } = action.payload;
+      const todo = state.find((todo) => todo.id === toggleId);
       if (todo) {
         todo.isDone = !todo.isDone;
       }
-
-      // remove later - just example
-      state[0].isDone = !state[0].isDone;
     },
-    removeTodo: (state, action: PayloadAction<string>) => {
-      // remove and uncomment .payload later
-      const incomingId = state[0].id;
-      // const incomingId = action.payload;
-
-      return state.filter((todo) => todo.id !== incomingId);
+    removeTodo: (state, action: PayloadAction<{ removeId: string }>) => {
+      const { removeId } = action.payload;
+      return state.filter((todo) => todo.id !== removeId);
     },
     toggleAllCheckboxes: (state) => {
       const haveUndoneTodos = state.some((todo) => !todo.isDone);

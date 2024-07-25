@@ -21,17 +21,12 @@ type TodoItem = {
 export function TodoApp() {
   // const [todoList, setTodoList] = useState<TodoItem[]>([]);
   const todoList = useSelector((state: RootState) => state.todoList);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
 
   const undoneItemsCount = todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
   const hasItems = todoList.length > 0;
-
-  // ---- Redux ----
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  // ---------------
 
   let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
 
@@ -118,12 +113,7 @@ export function TodoApp() {
       <h1 className={styles.todoHeader}>todos:</h1>
       <div className={styles.todo}>
         <AddTodoForm />
-        {/* <TodoList
-          list={renderList}
-          onToggle={handleCheckItem}
-          onRemove={handleRemoveItem}
-          onNameChange={handleItemNameChange}
-        /> */}
+        <TodoList list={renderList} />
         {/* {hasItems && (
           <TodoFooter
             undoneCounter={undoneItemsCount}
