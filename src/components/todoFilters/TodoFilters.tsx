@@ -4,7 +4,7 @@ import cx from "classnames";
 import { AppDispatch, RootState } from "../../states/store";
 import { FILTERS } from "../../constants/filters";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../states/filtersSlice/filtersSlice";
+import { setFilter } from "../../states/todoFilters/filtersSlice";
 
 type TodoFiltersProps = {
   className: string;
