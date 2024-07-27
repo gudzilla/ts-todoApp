@@ -3,7 +3,6 @@ import cx from "classnames";
 import RemoveIcon from "../../assets/icons/RemoveIcon.svg?react";
 import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
-// ---
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
 import {
@@ -24,20 +23,9 @@ export function TodoList() {
 
   let renderList = filterTodoListForRender(todoList, todoListFilter);
 
-  // OLD WAY
-  // let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
-
   function filterTodoListForRender(list: TodoItem[], filter: FilterNames): TodoItem[] {
     return list.filter(FILTERS_PREDICATE[filter]);
   }
-
-  // ???
-  // let renderList = dispatch(
-  //   filterList({
-  //     listForFilter: todoList,
-  //     filter: todoListFilter,
-  //   })
-  // );
 
   function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);

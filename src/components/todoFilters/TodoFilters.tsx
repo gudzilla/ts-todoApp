@@ -2,17 +2,14 @@ import { useSelector } from "react-redux";
 import styles from "./TodoFilters.module.css";
 import cx from "classnames";
 import { AppDispatch, RootState } from "../../states/store";
-import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
+import { FILTERS } from "../../constants/filters";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../states/filtersSlice/filtersSlice";
 
 type TodoFiltersProps = {
-  // filter: "all" | "active" | "completed";
-  // setFilter: (filterName: string) => void;
   className: string;
 };
 
-// export function TodoFilters({ filter, setFilter, className }: TodoFiltersProps) {
 export function TodoFilters({ className }: TodoFiltersProps) {
   const filter = useSelector((state: RootState) => state.filter);
   const dispatch = useDispatch<AppDispatch>();
