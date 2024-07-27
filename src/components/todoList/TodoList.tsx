@@ -5,25 +5,39 @@ import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
 // ---
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../state/store";
+import { AppDispatch, RootState } from "../../states/store";
 import {
   editTodoName,
   removeTodo,
   toogleItemCheckbox,
-} from "../../state/todoList/todoListSlice";
-
-type TodoItem = {
-  id: string;
-  isDone: boolean;
-  name: string;
-};
+} from "../../states/todoList/todoListSlice";
+import { FilterNames, FILTERS_PREDICATE } from "../../constants/filters";
+import { TodoItem } from "../../types";
 
 export function TodoList() {
   const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
-  // Redux
+
   const dispatch = useDispatch<AppDispatch>();
-  const renderList = useSelector((state: RootState) => state.todoList);
+  const todoList = useSelector((state: RootState) => state.todoList);
+  const todoListFilter = useSelector((state: RootState) => state.filter);
+
+  let renderList = filterTodoListForRender(todoList, todoListFilter);
+
+  // OLD WAY
+  // let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
+
+  function filterTodoListForRender(list: TodoItem[], filter: FilterNames): TodoItem[] {
+    return list.filter(FILTERS_PREDICATE[filter]);
+  }
+
+  // ???
+  // let renderList = dispatch(
+  //   filterList({
+  //     listForFilter: todoList,
+  //     filter: todoListFilter,
+  //   })
+  // );
 
   function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);
@@ -57,7 +71,7 @@ export function TodoList() {
 
   useEffect(() => {
     if (editModeId) {
-      const editItem = renderList.find((item) => item.id === editModeId);
+      const editItem = todoList.find((item) => item.id === editModeId);
       if (editItem) {
         setNewTodoName(editItem.name);
       }
@@ -76,9 +90,9 @@ export function TodoList() {
                 { [styles.done]: item.isDone },
                 { [styles.hidden]: item.id === editModeId }
               )}
-              // onDoubleClick={() => {
-              //   setEditModeId(item.id);
-              // }}
+              onDoubleClick={() => {
+                setEditModeId(item.id);
+              }}
             >
               <input
                 type="checkbox"
@@ -100,14 +114,14 @@ export function TodoList() {
             </div>
 
             {/* EDIT MODE FOR TODO ITEM */}
-            {/* {item.id === editModeId && (
+            {item.id === editModeId && (
               <ItemEditMode
                 value={newTodoName}
                 onChange={handleTodoNameChange}
                 onKeyDown={handleKeyDown}
                 onCancel={handleCancelEditChanges}
               />
-            )} */}
+            )}
           </li>
         );
       })}

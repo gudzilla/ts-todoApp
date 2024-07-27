@@ -7,28 +7,24 @@ import { TodoList } from "../todoList";
 import { TodoFooter } from "../todoFooter";
 import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
 // ----------
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../state/store";
-import { addNewTodo, toggleAllCheckboxes } from "../../state/todoList/todoListSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { RootState } from "../../states/store";
 
-type TodoItem = {
-  id: string;
-  isDone: boolean;
-  name: string;
-};
+// type TodoItem = {
+//   id: string;
+//   isDone: boolean;
+//   name: string;
+// };
 
 export function TodoApp() {
   // const [todoList, setTodoList] = useState<TodoItem[]>([]);
   const todoList = useSelector((state: RootState) => state.todoList);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
-
-  const undoneItemsCount = todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
   const hasItems = todoList.length > 0;
 
-  let renderList = todoList.filter(FILTERS_PREDICATE[todoListFilter]);
+  // FILTER RELATED STUFF
+  const [todoListFilter, setTodoListFilter] = useState(FILTERS.all);
+  // MOVE IT LOWER
+  const undoneItemsCount = todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
 
   // DELETE
   // function handleCheckItem(id: string) {
@@ -113,15 +109,15 @@ export function TodoApp() {
       <h1 className={styles.todoHeader}>todos:</h1>
       <div className={styles.todo}>
         <AddTodoForm />
-        <TodoList list={renderList} />
-        {/* {hasItems && (
+        <TodoList />
+        {hasItems && (
           <TodoFooter
-            undoneCounter={undoneItemsCount}
-            onClearCompleted={handleRemoveCompletedItems}
-            filter={todoListFilter}
-            setFilter={setTodoListFilter}
+          // undoneCounter={undoneItemsCount}
+          // onClearCompleted={handleRemoveCompletedItems}
+          // filter={todoListFilter}
+          // setFilter={setTodoListFilter}
           />
-        )} */}
+        )}
       </div>
     </section>
   );

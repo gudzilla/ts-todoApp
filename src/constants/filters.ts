@@ -1,14 +1,14 @@
-type TodoItem = {
-  id: string;
-  isDone: boolean;
-  name: string;
-};
+import { TodoItem } from "../types";
+
+export type FilterNames = "all" | "active" | "completed";
+
+type FiltersConst = Record<FilterNames, FilterNames>;
 
 const filterAll = (item: TodoItem) => item;
 const filterActive = (item: TodoItem) => !item.isDone;
 const filterCompleted = (item: TodoItem) => item.isDone;
 
-export const FILTERS = {
+export const FILTERS: FiltersConst = {
   all: "all",
   active: "active",
   completed: "completed",

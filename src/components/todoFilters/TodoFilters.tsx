@@ -1,35 +1,48 @@
+import { useSelector } from "react-redux";
 import styles from "./TodoFilters.module.css";
 import cx from "classnames";
+import { AppDispatch, RootState } from "../../states/store";
+import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
+import { useDispatch } from "react-redux";
+import { setFilter } from "../../states/filtersSlice/filtersSlice";
 
 type TodoFiltersProps = {
-  filter: "all" | "active" | "completed";
-  setFilter: (filterName: string) => void;
+  // filter: "all" | "active" | "completed";
+  // setFilter: (filterName: string) => void;
   className: string;
 };
 
-export function TodoFilters({ filter, setFilter, className }: TodoFiltersProps) {
+// export function TodoFilters({ filter, setFilter, className }: TodoFiltersProps) {
+export function TodoFilters({ className }: TodoFiltersProps) {
+  const filter = useSelector((state: RootState) => state.filter);
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <div className={cx(className, styles.filtersContent)}>
       <button
-        className={cx(styles.filter, { [styles.filterSelected]: filter === "all" })}
+        className={cx(styles.filter, { [styles.filterSelected]: filter === FILTERS.all })}
         onClick={() => {
-          setFilter("all");
+          dispatch(setFilter({ filter: FILTERS.all }));
         }}
       >
         All
       </button>
       <button
-        className={cx(styles.filter, { [styles.filterSelected]: filter === "active" })}
+        className={cx(styles.filter, {
+          [styles.filterSelected]: filter === FILTERS.active,
+        })}
         onClick={() => {
-          setFilter("active");
+          dispatch(setFilter({ filter: FILTERS.active }));
         }}
       >
         Active
       </button>
       <button
-        className={cx(styles.filter, { [styles.filterSelected]: filter === "completed" })}
+        className={cx(styles.filter, {
+          [styles.filterSelected]: filter === FILTERS.completed,
+        })}
         onClick={() => {
-          setFilter("completed");
+          dispatch(setFilter({ filter: FILTERS.completed }));
         }}
       >
         Completed

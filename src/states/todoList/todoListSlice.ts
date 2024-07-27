@@ -1,15 +1,5 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-
-type TodoItem = {
-  id: string;
-  isDone: boolean;
-  name: string;
-};
-
-type NewTodoName = {
-  editId: string;
-  newName: string;
-};
+import { TodoItem } from "../../types";
 
 const initialState: TodoItem[] = [];
 
@@ -46,7 +36,13 @@ const todoListSlice = createSlice({
     removeCompleted: (state) => {
       return state.filter((todo) => !todo.isDone);
     },
-    editTodoName: (state, action: PayloadAction<NewTodoName>) => {
+    editTodoName: (
+      state,
+      action: PayloadAction<{
+        editId: string;
+        newName: string;
+      }>
+    ) => {
       const { editId, newName } = action.payload;
       const todo = state.find((todo) => todo.id === editId);
       if (todo) {
