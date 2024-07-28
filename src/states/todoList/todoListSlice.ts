@@ -1,5 +1,7 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { TodoItem } from "../../types";
+import { RootState } from "../store";
+import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
 
 const initialState: TodoItem[] = [];
 
@@ -51,6 +53,13 @@ const todoListSlice = createSlice({
     },
   },
 });
+
+const selectTodoList = (state: RootState) => state.todoList;
+
+export const selectActiveTodoCount = createSelector(
+  [selectTodoList],
+  (todoList) => todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length
+);
 
 export const {
   addNewTodo,
