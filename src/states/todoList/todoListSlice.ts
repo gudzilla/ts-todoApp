@@ -18,7 +18,7 @@ const todoListSlice = createSlice({
         name: todoName,
       });
     },
-    toogleItemCheckbox: (state, action: PayloadAction<{ toggleId: string }>) => {
+    toggleTodoDone: (state, action: PayloadAction<{ toggleId: string }>) => {
       const { toggleId } = action.payload;
       const todo = state.find((todo) => todo.id === toggleId);
       if (todo) {
@@ -29,7 +29,7 @@ const todoListSlice = createSlice({
       const { removeId } = action.payload;
       return state.filter((todo) => todo.id !== removeId);
     },
-    toggleAllCheckboxes: (state) => {
+    toggleAllDone: (state) => {
       const haveUndoneTodos = state.some((todo) => !todo.isDone);
       for (let todo of state) {
         todo.isDone = haveUndoneTodos;
@@ -63,9 +63,9 @@ export const selectActiveTodoCount = createSelector(
 
 export const {
   addNewTodo,
-  toogleItemCheckbox,
+  toggleTodoDone,
   removeTodo,
-  toggleAllCheckboxes,
+  toggleAllDone,
   removeCompleted,
   editTodoName,
 } = todoListSlice.actions;

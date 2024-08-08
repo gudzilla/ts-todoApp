@@ -2,7 +2,7 @@ import styles from "./AddTodoForm.module.css";
 import { useState, useRef } from "react";
 import cx from "classnames";
 //  -----------
-import { addNewTodo, toggleAllCheckboxes } from "../../states/todoList/todoListSlice";
+import { addNewTodo, toggleAllDone } from "../../states/todoList/todoListSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
 import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
@@ -32,7 +32,7 @@ export function AddTodoForm() {
       <button
         className={cx(styles.completeButton, { [styles.onAllDone]: isListCompleted })}
         onClick={() => {
-          dispatch(toggleAllCheckboxes());
+          dispatch(toggleAllDone());
         }}
       >
         <span className={styles.completeButtonIcon}>❯</span>

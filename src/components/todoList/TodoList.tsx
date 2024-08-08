@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "../../states/store";
 import {
   editTodoName,
   removeTodo,
-  toogleItemCheckbox,
+  toggleTodoDone,
 } from "../../states/todoList/todoListSlice";
 import { FilterNames, FILTERS_PREDICATE } from "../../constants/filters";
 import { TodoItem } from "../../types";
@@ -86,8 +86,8 @@ export function TodoList() {
                 type="checkbox"
                 className={styles.itemCheckbox}
                 checked={item.isDone}
-                onChange={(e) => {
-                  dispatch(toogleItemCheckbox({ toggleId: item.id }));
+                onChange={() => {
+                  dispatch(toggleTodoDone({ toggleId: item.id }));
                 }}
               />
               <label className={styles.todoName}>{item.name}</label>
