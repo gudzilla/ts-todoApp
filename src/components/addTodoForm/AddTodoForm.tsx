@@ -1,28 +1,44 @@
 import styles from "./AddTodoForm.module.css";
 import { useState, useRef } from "react";
+import cx from "classnames";
+//  -----------
+import { addNewTodo, toggleAllDone } from "../../states/todoList/todoListSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../states/store";
+import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
 
-type AddTodoFormProps = {
-  onSubmit: (name: string) => void;
-  hasItems: boolean;
-  completeButtonNode: JSX.Element;
-};
-
-export function AddTodoForm({
-  onSubmit,
-  hasItems,
-  completeButtonNode,
-}: AddTodoFormProps) {
+export function AddTodoForm() {
   const [newTodoValue, setNewTodoValue] = useState("");
   const newTodoInput = useRef(null);
 
+  const todoList = useSelector((state: RootState) => state.todoList);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const hasItems = todoList.length > 0;
+  const isListCompleted = todoList.every(FILTERS_PREDICATE[FILTERS.completed]);
+
   const handleKeyDown = (event: EventFor<"input", "onKeyDown">) => {
+    const trimmedValue = newTodoValue.trim();
     if (event.key === "Enter") {
-      if (newTodoValue.trim().length > 1) {
-        onSubmit(newTodoValue.trim());
+      if (trimmedValue.length > 1) {
+        dispatch(addNewTodo({ todoName: trimmedValue }));
         setNewTodoValue("");
       }
     }
   };
+
+  function CompleteAllButton() {
+    return (
+      <button
+        className={cx(styles.completeButton, { [styles.onAllDone]: isListCompleted })}
+        onClick={() => {
+          dispatch(toggleAllDone());
+        }}
+      >
+        <span className={styles.completeButtonIcon}>❯</span>
+      </button>
+    );
+  }
 
   return (
     <div className={styles.newTodo}>
@@ -38,7 +54,7 @@ export function AddTodoForm({
         }}
         onKeyDown={handleKeyDown}
       />
-      {hasItems && completeButtonNode}
+      {hasItems && <CompleteAllButton />}
     </div>
   );
 }

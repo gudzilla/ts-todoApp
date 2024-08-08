@@ -1,7 +1,14 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../states/store";
+import { selectActiveTodoCount } from "../../states/todoList/todoListSlice";
+
 type TodoItemsLeftProps = {
-  undoneCounter: number;
   className: string;
 };
-export function TodoItemsLeft({ undoneCounter, className }: TodoItemsLeftProps) {
-  return <span className={className}>{undoneCounter} items left!</span>;
+export function TodoItemsLeft({ className }: TodoItemsLeftProps) {
+  const undoneTodosCount = useSelector((state: RootState) =>
+    selectActiveTodoCount(state)
+  );
+
+  return <span className={className}>{undoneTodosCount} items left!</span>;
 }

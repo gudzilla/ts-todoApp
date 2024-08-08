@@ -3,22 +3,29 @@ import cx from "classnames";
 import RemoveIcon from "../../assets/icons/RemoveIcon.svg?react";
 import { useState, useEffect } from "react";
 import { ItemEditMode } from "../itemEditMode";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../states/store";
+import {
+  editTodoName,
+  removeTodo,
+  toggleTodoDone,
+} from "../../states/todoList/todoListSlice";
+import { FilterNames, FILTERS_PREDICATE } from "../../constants/filters";
+import { TodoItem } from "../../types";
 
-type TodoItem = {
-  id: string;
-  isDone: boolean;
-  name: string;
-};
-type TodoListProps = {
-  list: TodoItem[];
-  onToggle: (id: string) => void;
-  onRemove: (id: string) => void;
-  onNameChange: (id: string, newName: string) => void;
-};
-
-export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoListProps) {
+export function TodoList() {
   const [editModeId, setEditModeId] = useState<string | null>(null);
   const [newTodoName, setNewTodoName] = useState("");
+
+  const dispatch = useDispatch<AppDispatch>();
+  const todoList = useSelector((state: RootState) => state.todoList);
+  const todoListFilter = useSelector((state: RootState) => state.filter);
+
+  let renderList = filterTodoListForRender(todoList, todoListFilter);
+
+  function filterTodoListForRender(list: TodoItem[], filter: FilterNames): TodoItem[] {
+    return list.filter(FILTERS_PREDICATE[filter]);
+  }
 
   function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
     setNewTodoName(value);
@@ -29,7 +36,12 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
   }
 
   function handleAcceptEditChanges(id: string, newName: string) {
-    onNameChange(id, newName);
+    dispatch(
+      editTodoName({
+        editId: id,
+        newName,
+      })
+    );
     setEditModeId(null);
   }
 
@@ -47,7 +59,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
 
   useEffect(() => {
     if (editModeId) {
-      const editItem = list.find((item) => item.id === editModeId);
+      const editItem = todoList.find((item) => item.id === editModeId);
       if (editItem) {
         setNewTodoName(editItem.name);
       }
@@ -58,7 +70,7 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
 
   return (
     <ul className={styles.ul}>
-      {list.map((item) => {
+      {renderList.map((item) => {
         return (
           <li key={item.id} className={styles.item}>
             <div
@@ -75,14 +87,14 @@ export function TodoList({ list = [], onToggle, onRemove, onNameChange }: TodoLi
                 className={styles.itemCheckbox}
                 checked={item.isDone}
                 onChange={() => {
-                  onToggle(item.id);
+                  dispatch(toggleTodoDone({ toggleId: item.id }));
                 }}
               />
               <label className={styles.todoName}>{item.name}</label>
               <button
                 className={styles.removeButton}
                 onClick={() => {
-                  onRemove(item.id);
+                  dispatch(removeTodo({ removeId: item.id }));
                 }}
               >
                 <RemoveIcon className={styles.removeIcon} />

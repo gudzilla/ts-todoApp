@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import styles from "./ItemEditMode.module.css";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
