@@ -1,25 +1,25 @@
-import styles from "./TodoList.module.css";
-import cx from "classnames";
-import RemoveIcon from "../../assets/icons/RemoveIcon.svg?react";
-import { useState, useEffect } from "react";
-import { ItemEditMode } from "../itemEditMode";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../states/store";
+import styles from './TodoList.module.css';
+import cx from 'classnames';
+import RemoveIcon from '../../assets/icons/RemoveIcon.svg?react';
+import { useState, useEffect } from 'react';
+import { ItemEditMode } from '../itemEditMode';
 import {
   editTodoName,
   removeTodo,
   toggleTodoDone,
-} from "../../states/todoList/todoListSlice";
-import { FilterNames, FILTERS_PREDICATE } from "../../constants/filters";
-import { TodoItem } from "../../types";
+} from '../../state/todoList/todoListSlice';
+import { FilterNames, FILTERS_PREDICATE } from '../../constants/filters';
+import { TodoItem } from '../../types';
+import { useTodoListFilterSelector, useTodoListSelector } from '../../state/selectors';
+import { useAppDispatch } from '../../shared/lib/redux/hooks';
 
 export function TodoList() {
   const [editModeId, setEditModeId] = useState<string | null>(null);
-  const [newTodoName, setNewTodoName] = useState("");
+  const [newTodoName, setNewTodoName] = useState('');
 
-  const dispatch = useDispatch<AppDispatch>();
-  const todoList = useSelector((state: RootState) => state.todoList);
-  const todoListFilter = useSelector((state: RootState) => state.filter);
+  const dispatch = useAppDispatch();
+  const todoListFilter = useTodoListFilterSelector();
+  const todoList = useTodoListSelector();
 
   let renderList = filterTodoListForRender(todoList, todoListFilter);
 
@@ -27,7 +27,7 @@ export function TodoList() {
     return list.filter(FILTERS_PREDICATE[filter]);
   }
 
-  function handleTodoNameChange({ target: { value } }: EventFor<"input", "onChange">) {
+  function handleTodoNameChange({ target: { value } }: EventFor<'input', 'onChange'>) {
     setNewTodoName(value);
   }
 
@@ -45,26 +45,26 @@ export function TodoList() {
     setEditModeId(null);
   }
 
-  function handleKeyDown(event: EventFor<"input", "onKeyDown">) {
+  function handleKeyDown(event: EventFor<'input', 'onKeyDown'>) {
     const { value } = event.target as HTMLInputElement;
     const { key } = event;
     const trimmedValue = value.trim();
 
-    if (key === "Enter" && trimmedValue.length > 1 && editModeId !== null) {
+    if (key === 'Enter' && trimmedValue.length > 1 && editModeId !== null) {
       handleAcceptEditChanges(editModeId, trimmedValue);
-    } else if (key === "Escape") {
+    } else if (key === 'Escape') {
       handleCancelEditChanges();
     }
   }
 
   useEffect(() => {
     if (editModeId) {
-      const editItem = todoList.find((item) => item.id === editModeId);
+      const editItem = todoList.find((item: TodoItem) => item.id === editModeId);
       if (editItem) {
         setNewTodoName(editItem.name);
       }
     } else {
-      setNewTodoName("");
+      setNewTodoName('');
     }
   }, [editModeId]);
 
@@ -83,7 +83,7 @@ export function TodoList() {
               }}
             >
               <input
-                type="checkbox"
+                type='checkbox'
                 className={styles.itemCheckbox}
                 checked={item.isDone}
                 onChange={() => {

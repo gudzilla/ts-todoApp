@@ -1,14 +1,13 @@
-import styles from "./TodoFooter.module.css";
-import cx from "classnames";
-import { TodoItemsLeft } from "../todoItemsLeft";
-import { TodoFilters } from "../todoFilters";
-import { TodoClearButton } from "../todoClearButton";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../states/store";
-import { removeCompleted } from "../../states/todoList/todoListSlice";
+import styles from './TodoFooter.module.css';
+import cx from 'classnames';
+import { TodoItemsLeft } from '../todoItemsLeft';
+import { TodoFilters } from '../todoFilters';
+import { TodoClearButton } from '../todoClearButton';
+import { removeCompleted } from '../../state/todoList/todoListSlice';
+import { useAppDispatch } from '../../shared/lib/redux/hooks';
 
 export function TodoFooter() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   function handleRemoveCompleted() {
     dispatch(removeCompleted());

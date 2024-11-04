@@ -1,4 +1,7 @@
-declare module "*.module.css" {
+declare type RootState = ReturnType<typeof store.getState>;
+declare type RootDispatch = typeof store.dispatch;
+
+declare module '*.module.css' {
   const styles: { [key: string]: string };
   export default styles;
 }

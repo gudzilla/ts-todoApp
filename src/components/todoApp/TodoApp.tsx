@@ -1,9 +1,8 @@
-import styles from "./TodoApp.module.css";
-import { AddTodoForm } from "../addTodoForm";
-import { TodoList } from "../todoList";
-import { TodoFooter } from "../todoFooter";
-import { useSelector } from "react-redux";
-import { RootState } from "../../states/store";
+import styles from './TodoApp.module.css';
+import { AddTodoForm } from '../addTodoForm';
+import { TodoList } from '../todoList';
+import { TodoFooter } from '../todoFooter';
+import { useSelector } from 'react-redux';
 
 export function TodoApp() {
   const todoList = useSelector((state: RootState) => state.todoList);

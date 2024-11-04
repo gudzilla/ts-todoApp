@@ -1,12 +1,11 @@
-import { createSelector, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { TodoItem } from "../../types";
-import { RootState } from "../store";
-import { FILTERS, FILTERS_PREDICATE } from "../../constants/filters";
+import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { TodoItem } from '../../types';
+import { FILTERS, FILTERS_PREDICATE } from '../../constants/filters';
 
 const initialState: TodoItem[] = [];
 
 const todoListSlice = createSlice({
-  name: "todoList",
+  name: 'todoList',
   initialState,
   reducers: {
     addNewTodo: (state, action: PayloadAction<{ todoName: string }>) => {
@@ -54,11 +53,17 @@ const todoListSlice = createSlice({
   },
 });
 
-const selectTodoList = (state: RootState) => state.todoList;
+// Selector for number of active todos
+const todoList = (state: RootState) => state.todoList;
 
-export const selectActiveTodoCount = createSelector(
-  [selectTodoList],
-  (todoList) => todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length
+const numberOfActiveTodoItems = (todoList: TodoItem[]) => {
+  console.log('selector executed');
+  return todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
+};
+
+export const activeTodosCountSelector = createSelector(
+  [todoList],
+  numberOfActiveTodoItems
 );
 
 export const {

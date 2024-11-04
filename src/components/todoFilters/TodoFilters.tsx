@@ -1,18 +1,17 @@
-import { useSelector } from "react-redux";
-import styles from "./TodoFilters.module.css";
-import cx from "classnames";
-import { AppDispatch, RootState } from "../../states/store";
-import { FILTERS } from "../../constants/filters";
-import { useDispatch } from "react-redux";
-import { setFilter } from "../../states/todoFilters/filtersSlice";
+import styles from './TodoFilters.module.css';
+import cx from 'classnames';
+import { FILTERS } from '../../constants/filters';
+import { setFilter } from '../../state/todoFilters/filtersSlice';
+import { useTodoListFilterSelector } from '../../state/selectors';
+import { useAppDispatch } from '../../shared/lib/redux/hooks';
 
 type TodoFiltersProps = {
   className: string;
 };
 
 export function TodoFilters({ className }: TodoFiltersProps) {
-  const filter = useSelector((state: RootState) => state.filter);
-  const dispatch = useDispatch<AppDispatch>();
+  const filter = useTodoListFilterSelector();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={cx(className, styles.filtersContent)}>
