@@ -2,10 +2,10 @@ import styles from './TodoApp.module.css';
 import { AddTodoForm } from '../addTodoForm';
 import { TodoList } from '../todoList';
 import { TodoFooter } from '../todoFooter';
-import { useSelector } from 'react-redux';
+import { useTodoListSelector } from '../../state/selectors';
 
 export function TodoApp() {
-  const todoList = useSelector((state: RootState) => state.todoList);
+  const todoList = useTodoListSelector();
   const hasItems = todoList.length > 0;
 
   return (

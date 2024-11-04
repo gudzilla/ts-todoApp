@@ -56,10 +56,8 @@ const todoListSlice = createSlice({
 // Selector for number of active todos
 const todoList = (state: RootState) => state.todoList;
 
-const numberOfActiveTodoItems = (todoList: TodoItem[]) => {
-  console.log('selector executed');
-  return todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
-};
+const numberOfActiveTodoItems = (todoList: TodoItem[]) =>
+  todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
 
 export const activeTodosCountSelector = createSelector(
   [todoList],
