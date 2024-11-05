@@ -1,6 +1,6 @@
-import { TodoItem } from "../types";
+import { TodoItem } from '../state/todoList/todoListSlice';
 
-export type FilterNames = "all" | "active" | "completed";
+export type FilterNames = 'all' | 'active' | 'completed';
 
 type FiltersConst = Record<FilterNames, FilterNames>;
 
@@ -9,9 +9,9 @@ const filterActive = (item: TodoItem) => !item.isDone;
 const filterCompleted = (item: TodoItem) => item.isDone;
 
 export const FILTERS: FiltersConst = {
-  all: "all",
-  active: "active",
-  completed: "completed",
+  all: 'all',
+  active: 'active',
+  completed: 'completed',
 };
 
 export const FILTERS_PREDICATE = {

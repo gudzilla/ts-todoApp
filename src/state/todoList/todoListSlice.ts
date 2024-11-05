@@ -1,8 +1,15 @@
 import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { TodoItem } from '../../types';
 import { FILTERS, FILTERS_PREDICATE } from '../../constants/filters';
 
-const initialState: TodoItem[] = [];
+export type TodoItem = {
+  id: string;
+  isDone: boolean;
+  name: string;
+};
+
+export type TodoListType = TodoItem[];
+
+const initialState: TodoListType = [];
 
 const todoListSlice = createSlice({
   name: 'todoList',
@@ -37,7 +44,7 @@ const todoListSlice = createSlice({
     removeCompleted: (state) => {
       return state.filter((todo) => !todo.isDone);
     },
-    editTodoName: (
+    changeTodo: (
       state,
       action: PayloadAction<{
         editId: string;
@@ -56,12 +63,12 @@ const todoListSlice = createSlice({
 // Selector for number of active todos
 const todoList = (state: RootState) => state.todoList;
 
-const numberOfActiveTodoItems = (todoList: TodoItem[]) =>
+const getNumberOfActiveTodoItems = (todoList: TodoListType) =>
   todoList.filter(FILTERS_PREDICATE[FILTERS.active]).length;
 
 export const activeTodosCountSelector = createSelector(
   [todoList],
-  numberOfActiveTodoItems
+  getNumberOfActiveTodoItems
 );
 
 export const {
@@ -70,7 +77,7 @@ export const {
   removeTodo,
   toggleAllDone,
   removeCompleted,
-  editTodoName,
+  changeTodo,
 } = todoListSlice.actions;
 
 export default todoListSlice.reducer;

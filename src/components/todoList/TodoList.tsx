@@ -4,12 +4,13 @@ import RemoveIcon from '../../assets/icons/RemoveIcon.svg?react';
 import { useState, useEffect } from 'react';
 import { ItemEditMode } from '../itemEditMode';
 import {
-  editTodoName,
+  changeTodo,
   removeTodo,
   toggleTodoDone,
+  TodoItem,
+  TodoListType,
 } from '../../state/todoList/todoListSlice';
 import { FilterNames, FILTERS_PREDICATE } from '../../constants/filters';
-import { TodoItem } from '../../types';
 import { useTodoListFilterSelector, useTodoListSelector } from '../../state/selectors';
 import { useAppDispatch } from '../../shared/lib/redux/hooks';
 
@@ -23,7 +24,10 @@ export function TodoList() {
 
   let renderList = filterTodoListForRender(todoList, todoListFilter);
 
-  function filterTodoListForRender(list: TodoItem[], filter: FilterNames): TodoItem[] {
+  function filterTodoListForRender(
+    list: TodoListType,
+    filter: FilterNames
+  ): TodoListType {
     return list.filter(FILTERS_PREDICATE[filter]);
   }
 
@@ -37,7 +41,7 @@ export function TodoList() {
 
   function handleAcceptEditChanges(id: string, newName: string) {
     dispatch(
-      editTodoName({
+      changeTodo({
         editId: id,
         newName,
       })
