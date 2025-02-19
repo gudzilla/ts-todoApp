@@ -1,8 +1,4 @@
-# Todo App (React + TypeScript)
-
-### Incoming Updates:
-
-- Working on replacing useState with Redux State management
+# Todo App (React + TypeScript + Redux)
 
 This is minimalist and appealing todo web application that can help track tasks that needs to be done (aka **todos**).
 
