@@ -1,10 +1,6 @@
 # Todo App (React + TypeScript + Redux)
 
-[LIVE DEMO LINK](https://ts-todos-app.netlify.app/)
-
-Status:
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/07539ad7-6f41-4ad1-98d3-5372bcbeff47/deploy-status)](https://app.netlify.com/sites/ts-todos-app/deploys)
+<a href="https://ts-todos-app.netlify.app/" target="_blank">LIVE DEMO LINK</a>
 
 This is minimalist and appealing todo web application that can help track tasks that needs to be done (aka **todos**).
 
