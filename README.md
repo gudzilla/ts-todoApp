@@ -1,5 +1,11 @@
 # Todo App (React + TypeScript + Redux)
 
+[LIVE DEMO LINK](https://ts-todos-app.netlify.app/)
+
+Status:
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/07539ad7-6f41-4ad1-98d3-5372bcbeff47/deploy-status)](https://app.netlify.com/sites/ts-todos-app/deploys)
+
 This is minimalist and appealing todo web application that can help track tasks that needs to be done (aka **todos**).
 
 Users have the ability to add, edit and remove their todos. Mark them as done. Filter them to see all, active or completed todos. And also remove all completed todos in one click.
@@ -16,7 +22,7 @@ Users have the ability to add, edit and remove their todos. Mark them as done. F
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-## How to use:
+## Features
 
 - **Add new todos** - using text input and pressing `Enter/Return` key to add it to the list.
 - **Edit todo name** - by double-clicking on todo item.
